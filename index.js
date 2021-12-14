@@ -27,9 +27,9 @@ const event = {
   duration: moment(end).toISOString(),
   location: location1,
 };
-var glink="<b>Google</b>: <a href="+google(event)+">CLick here to add</a>";
-var olink="<b>Outlook</b>: <a href="+outlook(event)+">CLick here to add</a>";
-var oflink="<b>Microsoft office365</b>: <a href="+office365(event)+">CLick here to add</a>";
+var glink="<b>Google</b>: <a href="+google(event)+">Click here to add</a>";
+var olink="<b>Outlook</b>: <a href="+outlook(event)+">Click here to add</a>";
+var oflink="<b>Microsoft office365</b>: <a href="+office365(event)+">Click here to add</a>";
 //Then fetch the link
 // console.log(glink); // https://calendar.google.com/calendar/render...
 // console.log(olink); // https://outlook.live.com/owa/...
