@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 app.listen(8080,()=>console.log('Started'));
-app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const { google, outlook, office365 } = require("calendar-link");
