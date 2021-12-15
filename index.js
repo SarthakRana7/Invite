@@ -4,7 +4,6 @@ const moment = require("moment");
 const bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
-app.listen(8000,()=>console.log('Started'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const { google, outlook, office365 } = require("calendar-link");
@@ -14,22 +13,22 @@ app.post('/Invite',function (req, res) {
     let data1=req.body;
     var sendermail=data1.Aemail;
     var startd=parseInt(data1.Start);
-    var end= parseInt(data1.End);
+    var end1= parseInt(data1.End);
     var location1=data1.Location;
 var description1=data1.Description;
 var summary1=data1.Summary;
-console.log(moment());
 // Set event as an object
+var endset=moment.unix(startd).add(30, 'minutes').toISOString();
 const event = {
   title: summary1,
   description: description1,
-  start: moment(startd).toISOString(),
-  duration: moment(end).toISOString(),
+  start: moment.unix(startd).toISOString(),
+  duration: [30, 'minutes'],
   location: location1,
 };
-var glink="<b>Google</b>: <a href="+google(event)+">Click here to add</a>";
-var olink="<b>Outlook</b>: <a href="+outlook(event)+">Click here to add</a>";
-var oflink="<b>Microsoft office365</b>: <a href="+office365(event)+">Click here to add</a>";
+var glink="<b>Google</b>: <a href="+google(event)+">Click here to add to your calendar</a>";
+var olink="<b>Outlook</b>: <a href="+outlook(event)+">Click here to add to your calendar</a>";
+var oflink="<b>Microsoft office365</b>: <a href="+office365(event)+">Click here to add to your calendar</a>";
 //Then fetch the link
 // console.log(glink); // https://calendar.google.com/calendar/render...
 // console.log(olink); // https://outlook.live.com/owa/...
@@ -46,8 +45,8 @@ var smtpTransport = nodemailer.createTransport({
     const cal = ical({ domain: "Moneybootscap@gmail.com", name: 'My test calendar event' });
     //cal.domain("mytestwebsite.com");
     cal.createEvent({
-            start:  moment(startd).toISOString(),     // eg : moment()
-            end: moment(end).toISOString(),           // eg : moment(1,'days')
+            start:  moment.unix(startd).toISOString(),    // eg : moment()
+            end: endset,          // eg : moment(1,'days')
             summary: summary1,         // 'Summary of your event'
             description: description1, // 'More description'
             location: location1,       // 'location'
@@ -89,3 +88,7 @@ smtpTransport.sendMail(mailOptions, function (error, response) {
     })
 
 });
+app.listen(8000,()=>{
+
+    console.log("running")
+  });
